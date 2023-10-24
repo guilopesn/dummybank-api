@@ -1,0 +1,57 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint/eslint-plugin", "prettier", "unused-imports"],
+  "extends": [
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:@typescript-eslint/strict"
+  ],
+  "rules": {
+    "@typescript-eslint/explicit-function-return-type": "error",
+    "@typescript-eslint/explicit-member-accessibility": "error",
+    "@typescript-eslint/explicit-module-boundary-types": "error",
+    "@typescript-eslint/method-signature-style": ["error", "method"],
+    "@typescript-eslint/no-confusing-void-expression": "error",
+    "no-invalid-this": "off",
+    "@typescript-eslint/no-invalid-this": "error",
+    "no-loop-func": "off",
+    "@typescript-eslint/no-loop-func": "error",
+    "@typescript-eslint/no-extraneous-class": [
+      "error",
+      {
+        "allowConstructorOnly": true,
+        "allowStaticOnly": true,
+        "allowWithDecorator": true
+      }
+    ],
+    "no-redeclare": "off",
+    "@typescript-eslint/no-redeclare": "error",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+    "no-unused-expressions": "off",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": "error",
+    "@typescript-eslint/no-inferrable-types": "off",
+    "@typescript-eslint/promise-function-async": "error",
+    "@typescript-eslint/typedef": [
+      "error",
+      {
+        "arrayDestructuring": false,
+        "arrowParameter": true,
+        "memberVariableDeclaration": true,
+        "objectDestructuring": false,
+        "parameter": true,
+        "propertyDeclaration": true,
+        "variableDeclaration": true,
+        "variableDeclarationIgnoreFunction": true
+      }
+    ],
+    "unused-imports/no-unused-imports": "error"
+  }
+}
