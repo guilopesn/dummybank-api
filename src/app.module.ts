@@ -2,6 +2,7 @@ import { APP_PIPE } from '@nestjs/core';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AccountsModule } from '@/accounts';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         migrationsTransactionMode: 'all',
       }),
     }),
+    AccountsModule,
   ],
   controllers: [],
   providers: [
