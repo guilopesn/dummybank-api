@@ -61,6 +61,10 @@ export class Account {
       throw new Error(`Você deve depositar uma quantia superior a 0`);
     }
 
+    if (this.deletedAt) {
+      throw new Error(`Você não pode fazer depósitos em contas desativadas`);
+    }
+
     this.balance += amount;
   }
 
@@ -71,6 +75,10 @@ export class Account {
 
     if (amount > this.balance) {
       throw new Error(`Saldo insuficiente`);
+    }
+
+    if (this.deletedAt) {
+      throw new Error(`Você não pode fazer saques em contas desativadas`);
     }
 
     this.balance -= amount;
