@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Account, AccountsRepository } from '../../domain';
 import { CreateAccountDTO } from '../dtos';
 
@@ -18,5 +22,15 @@ export class AccountsService {
 
   public async getAll(): Promise<Account[]> {
     return this.repository.find();
+  }
+
+  public async getById(id: string): Promise<Account> {
+    const account: Account | null = await this.repository.findById(id);
+
+    if (!account) {
+      throw new NotFoundException(`Conta não encontrada pelo ID: ${id}`);
+    }
+
+    return account;
   }
 }
