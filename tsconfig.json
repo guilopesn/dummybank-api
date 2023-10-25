@@ -10,6 +10,7 @@
     "strict": true,
     "strictNullChecks": true,
     "strictBindCallApply": true,
+    "strictPropertyInitialization": false,
     "noImplicitAny": true,
     "paths": {
       "@/*": ["./src/*"]
