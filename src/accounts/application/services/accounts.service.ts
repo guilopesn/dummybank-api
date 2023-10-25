@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Account, AccountsRepository } from '../../domain';
-import { CreateAccountDTO } from '../dtos';
+import { CreateAccountDTO, UpdateAccountDTO } from '../dtos';
 
 @Injectable()
 export class AccountsService {
@@ -44,5 +44,13 @@ export class AccountsService {
     }
 
     return account;
+  }
+
+  public async update(dto: UpdateAccountDTO, id: string): Promise<Account> {
+    const account: Account = await this.getById(id);
+
+    account.mergeProps(dto);
+
+    return this.repository.save(account);
   }
 }
