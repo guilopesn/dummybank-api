@@ -16,7 +16,7 @@ import { AccountsModule } from '@/accounts';
         username: configService.getOrThrow('DATABASE_USERNAME'),
         password: configService.getOrThrow('DATABASE_PASSWORD'),
         database: configService.getOrThrow('DATABASE_NAME'),
-        migrations: [],
+        autoLoadEntities: true,
         migrationsRun: true,
         migrationsTransactionMode: 'all',
       }),

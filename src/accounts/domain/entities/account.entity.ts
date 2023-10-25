@@ -40,12 +40,14 @@ export class Account {
   @ApiProperty({ title: 'Deletada em', type: Date, nullable: true })
   public deletedAt: Date | null;
 
-  public constructor(props: AccountProps) {
-    this.customer = props.customer;
+  public constructor(props?: AccountProps) {
+    if (props) {
+      this.customer = props.customer;
 
-    this.type = props.type;
+      this.type = props.type;
 
-    this.number = props.number;
+      this.number = props.number;
+    }
 
     this.balance = 0;
   }
