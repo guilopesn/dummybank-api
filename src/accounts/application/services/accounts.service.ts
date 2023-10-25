@@ -53,4 +53,10 @@ export class AccountsService {
 
     return this.repository.save(account);
   }
+
+  public async delete(id: string): Promise<Account> {
+    const account: Account = await this.getById(id);
+
+    return this.repository.delete(account);
+  }
 }
