@@ -33,4 +33,16 @@ export class AccountsService {
 
     return account;
   }
+
+  public async getByNumber(number: string): Promise<Account> {
+    const account: Account | null = await this.repository.findByNumber(number);
+
+    if (!account) {
+      throw new NotFoundException(
+        `Conta não encontrada pelo número: ${number}`,
+      );
+    }
+
+    return account;
+  }
 }
