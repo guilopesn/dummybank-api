@@ -59,4 +59,10 @@ export class AccountsService {
 
     return this.repository.delete(account);
   }
+
+  public async recover(id: string): Promise<Account> {
+    const account: Account = await this.getById(id);
+
+    return this.repository.recover(account);
+  }
 }
