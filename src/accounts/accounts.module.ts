@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AccountSchema, TypeOrmAccountsRepository } from './infrastructure';
-import { AccountsRepository } from './domain';
 import { AccountsService } from './application';
+import { AccountsRepository } from './domain';
+import {
+  AccountSchema,
+  AccountsController,
+  TypeOrmAccountsRepository,
+} from './infrastructure';
 
 @Module({
   imports: [TypeOrmModule.forFeature([AccountSchema])],
-  controllers: [],
+  controllers: [AccountsController],
   providers: [
     { provide: AccountsRepository, useClass: TypeOrmAccountsRepository },
     AccountsService,
