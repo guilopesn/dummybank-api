@@ -15,4 +15,8 @@ export class AccountsService {
 
     return this.repository.save(account);
   }
+
+  public async getAll(): Promise<Account[]> {
+    return this.repository.find();
+  }
 }
