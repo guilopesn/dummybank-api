@@ -15,6 +15,6 @@ import {
     { provide: AccountsRepository, useClass: TypeOrmAccountsRepository },
     AccountsService,
   ],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, AccountsService],
 })
 export class AccountsModule {}

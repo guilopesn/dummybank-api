@@ -1,39 +1,48 @@
 import { Injectable } from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { EntityManager } from 'typeorm';
 import { Account, AccountsRepository } from '../../../domain';
-import { InjectRepository } from '@nestjs/typeorm';
-import { AccountSchema } from '../entity-schemas/account.entity-schema';
-import { Repository } from 'typeorm';
 
 @Injectable()
 export class TypeOrmAccountsRepository extends AccountsRepository {
   public constructor(
-    @InjectRepository(AccountSchema)
-    private readonly ormRepository: Repository<Account>,
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
   ) {
     super();
   }
 
   public async find(): Promise<Account[]> {
-    return this.ormRepository.find({ withDeleted: true });
+    return this.entityManager.find(Account, { withDeleted: true });
   }
 
   public async findById(id: string): Promise<Account | null> {
-    return this.ormRepository.findOne({ where: { id }, withDeleted: true });
+    return this.entityManager.findOne(Account, {
+      where: { id },
+      withDeleted: true,
+    });
   }
 
   public async findByNumber(number: string): Promise<Account | null> {
-    return this.ormRepository.findOne({ where: { number }, withDeleted: true });
+    return this.entityManager.findOne(Account, {
+      where: { number },
+      withDeleted: true,
+    });
   }
 
   public async save(account: Account): Promise<Account> {
-    return this.ormRepository.save(account);
+    return this.entityManager.save(account);
+  }
+
+  public async saveMany(accounts: Account[]): Promise<Account[]> {
+    return this.entityManager.save(accounts);
   }
 
   public async delete(account: Account): Promise<Account> {
-    return this.ormRepository.softRemove(account);
+    return this.entityManager.softRemove(account);
   }
 
   public async recover(account: Account): Promise<Account> {
-    return this.ormRepository.recover(account);
+    return this.entityManager.recover(account);
   }
 }

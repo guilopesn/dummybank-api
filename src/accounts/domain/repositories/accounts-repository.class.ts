@@ -9,6 +9,8 @@ export abstract class AccountsRepository {
 
   public abstract save(account: Account): Promise<Account>;
 
+  public abstract saveMany(accounts: Account[]): Promise<Account[]>;
+
   public abstract delete(account: Account): Promise<Account>;
 
   public abstract recover(account: Account): Promise<Account>;
