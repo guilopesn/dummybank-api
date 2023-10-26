@@ -1,3 +1,4 @@
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { AccountTypes } from '../enums';
 import { Account, AccountMergeProps, AccountProps } from './account.entity';
 
@@ -16,60 +17,84 @@ describe('Account', () => {
     sut.deposit(50);
   });
 
-  test('Should be defined', () => {
-    expect(sut).toBeDefined();
+  describe('constructor', () => {
+    it('Should be defined', () => {
+      expect(sut).toBeDefined();
+    });
+
+    it('Should match props', () => {
+      expect(sut).toMatchObject(sutProps);
+    });
   });
 
-  test('Should match props', () => {
-    expect(sut).toMatchObject(sutProps);
+  describe('mergeProps', () => {
+    it('Should correctly merge props', () => {
+      const mergeProps: AccountMergeProps = {
+        customer: 'Customer it 1',
+        number: '0002',
+      };
+
+      sut.mergeProps(mergeProps);
+
+      expect(sut).toMatchObject(mergeProps);
+    });
   });
 
-  test('Should correctly merge props', () => {
-    const mergeProps: AccountMergeProps = {
-      customer: 'Customer Test 1',
-      number: '0002',
-    };
+  describe('deposit', () => {
+    it('Should add amount to balance', () => {
+      sut.deposit(100);
 
-    sut.mergeProps(mergeProps);
+      expect(sut.balance).toEqual(150);
+    });
 
-    expect(sut).toMatchObject(mergeProps);
+    it('Should throw BadRequestException when amount is negative or 0', () => {
+      expect(() => {
+        sut.deposit(-1);
+      }).toThrow(BadRequestException);
+
+      expect(() => {
+        sut.deposit(0);
+      }).toThrow(BadRequestException);
+    });
+
+    it('Should throw ForbiddenException on deleted account', () => {
+      sut.deletedAt = new Date();
+
+      expect(() => {
+        sut.deposit(10);
+      }).toThrow(ForbiddenException);
+    });
   });
 
-  test('Should add deposit amount to balance', () => {
-    sut.deposit(100);
+  describe('withdraw', () => {
+    it('Should subtract amount from balance', () => {
+      sut.withdraw(10);
 
-    expect(sut.balance).toEqual(150);
-  });
+      expect(sut.balance).toEqual(40);
+    });
 
-  test('Should throw if deposit amount is negative or 0', () => {
-    expect(() => {
-      sut.deposit(-1);
-    }).toThrow();
+    it('Should throw BadRequestException when amount is negative or 0', () => {
+      expect(() => {
+        sut.withdraw(-1);
+      }).toThrow();
 
-    expect(() => {
-      sut.deposit(0);
-    }).toThrow();
-  });
+      expect(() => {
+        sut.withdraw(0);
+      }).toThrow(BadRequestException);
+    });
 
-  test('Should subtract withdraw amount from balance', () => {
-    sut.withdraw(10);
+    it('Should throw BadRequestException when amount is greater than balance', () => {
+      expect(() => {
+        sut.withdraw(60);
+      }).toThrow(BadRequestException);
+    });
 
-    expect(sut.balance).toEqual(40);
-  });
+    it('Should throw ForbiddenException on deleted account', () => {
+      sut.deletedAt = new Date();
 
-  test('Should throw if withdraw amount is negative or 0', () => {
-    expect(() => {
-      sut.withdraw(-1);
-    }).toThrow();
-
-    expect(() => {
-      sut.withdraw(0);
-    }).toThrow();
-  });
-
-  test('Should throw if withdraw amount is greater than balance', () => {
-    expect(() => {
-      sut.withdraw(60);
-    }).toThrow();
+      expect(() => {
+        sut.withdraw(10);
+      }).toThrow(ForbiddenException);
+    });
   });
 });
