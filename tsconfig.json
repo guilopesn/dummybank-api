@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
     "target": "es2022",
-    "outDir": "./dist",
+    "module": "commonjs",
     "baseUrl": "./",
-    "resolveJsonModule": true,
+    "outDir": "./dist",
     "strict": true,
     "strictNullChecks": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": false,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   }
 }
