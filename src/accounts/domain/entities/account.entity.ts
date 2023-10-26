@@ -1,3 +1,4 @@
+import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { ApiProperty } from '@nestjs/swagger';
 import { AccountTypes } from '../enums';
 
@@ -60,29 +61,33 @@ export class Account {
 
   public deposit(amount: number): void {
     if (amount <= 0) {
-      throw new Error(`Você deve depositar uma quantia superior a 0`);
+      throw new BadRequestException(`A quantia deve ser superior a 0`);
     }
 
     if (this.deletedAt) {
-      throw new Error(`Você não pode fazer depósitos em contas desativadas`);
+      throw new ForbiddenException(
+        `Você não pode fazer transações em contas desativadas`,
+      );
     }
 
-    this.balance += amount;
+    this.balance = this.balance + amount;
   }
 
   public withdraw(amount: number): void {
     if (amount <= 0) {
-      throw new Error(`Você deve sacar uma quantia superior a 0`);
+      throw new BadRequestException(`A quantia deve ser superior a 0`);
     }
 
     if (amount > this.balance) {
-      throw new Error(`Saldo insuficiente`);
+      throw new BadRequestException(`Saldo insuficiente`);
     }
 
     if (this.deletedAt) {
-      throw new Error(`Você não pode fazer saques em contas desativadas`);
+      throw new ForbiddenException(
+        `Você não pode fazer transações em contas desativadas`,
+      );
     }
 
-    this.balance -= amount;
+    this.balance = this.balance - amount;
   }
 }

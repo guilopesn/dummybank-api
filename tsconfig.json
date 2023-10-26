@@ -11,9 +11,6 @@
     "strictNullChecks": true,
     "strictBindCallApply": true,
     "strictPropertyInitialization": false,
-    "noImplicitAny": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "noImplicitAny": true
   }
 }

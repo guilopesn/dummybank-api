@@ -28,9 +28,6 @@ function initializeSwaggerUi(app: NestApplication): void {
   const document: OpenAPIObject = SwaggerModule.createDocument(app, config);
 
   const options: SwaggerCustomOptions = {
-    swaggerOptions: {
-      docExpansion: 'none',
-    },
     customSiteTitle: siteTitle,
   };
 

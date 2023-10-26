@@ -1,7 +1,7 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
   "rootDir": "src",
-  "testRegex": ".*\\.spec\\.ts$",
+  "testRegex": ".*\\.e2e-spec\\.ts$",
   "testEnvironment": "node",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
@@ -11,5 +11,5 @@
     "!**/index.(t|j)s",
     "!**/migrations/*.(t|j)s"
   ],
-  "coverageDirectory": "../coverage"
+  "coverageDirectory": "../e2e-coverage"
 }

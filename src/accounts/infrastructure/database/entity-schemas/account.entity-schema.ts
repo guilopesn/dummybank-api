@@ -7,38 +7,42 @@ export const AccountSchema: EntitySchema<Account> = new EntitySchema({
   target: Account,
   columns: {
     id: {
-      type: String,
+      type: 'uuid',
       primary: true,
       generated: 'uuid',
     },
     customer: {
-      type: String,
+      type: 'varchar',
     },
     type: {
       type: 'enum',
       enum: Object.values(AccountTypes),
     },
     number: {
-      type: String,
+      type: 'varchar',
     },
     balance: {
-      type: Number,
+      type: 'decimal',
       precision: 10,
       scale: 2,
+      transformer: {
+        to: (value: number): number => value,
+        from: (value: string): number => parseFloat(value),
+      },
     },
     createdAt: {
       name: 'created_at',
-      type: Date,
+      type: 'timestamp',
       createDate: true,
     },
     updatedAt: {
       name: 'updated_at',
-      type: Date,
+      type: 'timestamp',
       updateDate: true,
     },
     deletedAt: {
       name: 'deleted_at',
-      type: Date,
+      type: 'timestamp',
       deleteDate: true,
     },
   },

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { AccountTypes } from '../../domain';
 import { IsEnum, IsNotEmpty, IsNumberString } from 'class-validator';
+import { AccountTypes } from '../../domain';
 
 export class CreateAccountDTO {
   @ApiProperty({ title: 'Cliente' })
