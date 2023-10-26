@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { AccountTypes } from '@/accounts';
+import { AccountTypes } from '../../accounts';
 
 export class CreateAccount1698198221747 implements MigrationInterface {
   private readonly table: Table = new Table({

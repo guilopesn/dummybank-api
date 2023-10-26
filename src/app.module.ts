@@ -2,8 +2,12 @@ import { APP_PIPE } from '@nestjs/core';
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CreateAccount1698198221747 } from '@/database';
-import { AccountsModule } from '@/accounts';
+import {
+  CreateAccount1698198221747,
+  CreateTransaction1698206537990,
+} from './database';
+import { AccountsModule } from './accounts';
+import { TransactionsModule } from './transactions';
 
 @Module({
   imports: [
@@ -18,12 +22,16 @@ import { AccountsModule } from '@/accounts';
         password: configService.getOrThrow('DATABASE_PASSWORD'),
         database: configService.getOrThrow('DATABASE_NAME'),
         autoLoadEntities: true,
-        migrations: [CreateAccount1698198221747],
+        migrations: [
+          CreateAccount1698198221747,
+          CreateTransaction1698206537990,
+        ],
         migrationsRun: true,
         migrationsTransactionMode: 'all',
       }),
     }),
     AccountsModule,
+    TransactionsModule,
   ],
   controllers: [],
   providers: [
