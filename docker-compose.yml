@@ -6,10 +6,18 @@ services:
     image: docker.io/bitnami/postgresql:13
     hostname: postgresql
     env_file: .docker/postgresql/.env
-    ports:
-      - 5432:5432
     volumes:
       - postgresql_data:/bitnami/postgresql
+
+  api:
+    build:
+      context: .
+      tags:
+        - 'dummybank-api:1.0.0'
+    hostname: api
+    env_file: .docker/api/.env
+    ports:
+      - 8080:8080
 
 volumes:
   postgresql_data:
