@@ -34,6 +34,10 @@ export class AccountsService {
     return account;
   }
 
+  public async getManyByIds(ids: string[]): Promise<Account[]> {
+    return Promise.all(ids.map(async (curId: string) => this.getById(curId)));
+  }
+
   public async getByNumber(number: string): Promise<Account> {
     const account: Account | null = await this.repository.findByNumber(number);
 
@@ -64,5 +68,38 @@ export class AccountsService {
     const account: Account = await this.getById(id);
 
     return this.repository.recover(account);
+  }
+
+  public async deposit(amount: number, id: string): Promise<void> {
+    const account: Account = await this.getById(id);
+
+    account.deposit(amount);
+
+    await this.repository.save(account);
+  }
+
+  public async withdraw(amount: number, id: string): Promise<void> {
+    const account: Account = await this.getById(id);
+
+    account.withdraw(amount);
+
+    await this.repository.save(account);
+  }
+
+  public async pix(
+    amount: number,
+    fromId: string,
+    toId: string,
+  ): Promise<void> {
+    const [fromAccount, toAccount]: Account[] = await Promise.all([
+      this.getById(fromId),
+      this.getById(toId),
+    ]);
+
+    fromAccount.withdraw(amount);
+
+    toAccount.deposit(amount);
+
+    await this.repository.saveMany([fromAccount, toAccount]);
   }
 }
